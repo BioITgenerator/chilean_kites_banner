@@ -3,7 +3,4 @@
 This repository contains the files for the "Chilean Kites" banner.
 
 ## Banner Preview
-
-![Banner Preview](https://www.xokita.de/baner_volantines/volantin_afiche_fondo.png)
-
-[Click here to view the full banner](https://www.xokita.de/baner_volantines/volantines.html)
+<iframe src="https://bioitgenerator.github.io/chilean_kites_banner/volantines.html" width="100%" height="500"></iframe>
