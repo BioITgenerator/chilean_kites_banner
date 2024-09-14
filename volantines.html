@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animación Cometa</title>
+    <style>
+        /* Make the body full height and use Flexbox to center content */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;  /* Center horizontally */
+            align-items: center;      /* Center vertically */
+            background-color: #f0f0f0;
+        }
+
+        /* Center the container within the body */
+        #container {
+            position: relative;
+            width: 80vw;
+            height: 80vh;
+            background-image: url('https://www.xokita.de/baner_volantines/volantin_afiche_fondo.png');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Style for the cometas (kites) */
+        .cometa {
+            position: absolute;
+            width: 50px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <img id="cometa1" class="cometa" src="https://www.xokita.de/baner_volantines/cometa_transparent.png" alt="Cometa 1">
+        <img id="cometa2" class="cometa" src="https://www.xokita.de/baner_volantines/papel_transparent.png" alt="Cometa 2">
+        <img id="cometa3" class="cometa" src="https://www.xokita.de/baner_volantines/plastico_transparente.png" alt="Cometa 3">
+    </div>
+
+    <script>
+        let cometa1 = document.getElementById('cometa1');
+        let cometa2 = document.getElementById('cometa2');
+        let cometa3 = document.getElementById('cometa3');
+        let container = document.getElementById('container');
+
+        let posX1 = 400, posY1 = 0, velX1 = 0.09, velY1 = 0.06, angle1 = 0;
+        let posX2 = 570, posY2 = 0, velX2 = 0.09, velY2 = 0.06, angle2 = 0;
+        let posX3 = 700, posY3 = 0, velX3 = 0.09, velY3 = 0.06, angle3 = 0;
+
+        let vientoActivo = false;
+        let vientoIntensidad = 0;
+
+        function ajustarVelocidad(velocidad, factorOscilación) {
+            return velocidad + (Math.sin(Date.now() / 2500) * factorOscilación);
+        }
+
+        function ajustarRotacion(angle, factorRotacion) {
+            return angle + factorRotacion;
+        }
+
+        function activarViento() {
+            vientoActivo = true;
+            vientoIntensidad = 1;
+            setTimeout(() => {
+                vientoActivo = false;
+                vientoIntensidad = 0;
+            }, 5000);
+        }
+
+        function moverCometas() {
+            const containerRect = container.getBoundingClientRect();
+
+            const cometaWidth1 = cometa1.clientWidth;
+            const cometaHeight1 = cometa1.clientHeight;
+            const cometaWidth2 = cometa2.clientWidth;
+            const cometaHeight2 = cometa2.clientHeight;
+            const cometaWidth3 = cometa3.clientWidth;
+            const cometaHeight3 = cometa3.clientHeight;
+
+            velX1 = ajustarVelocidad(velX1, 0.02);
+            velY1 = ajustarVelocidad(velY1, 0.015);
+            angle1 = !vientoActivo ? ajustarRotacion(angle1, 0.1) : angle1 + (0 - angle1) * 0.05 * vientoIntensidad;
+            posX1 += velX1;
+            posY1 += velY1;
+            if (posX1 + cometaWidth1 >= containerRect.width - 400 || posX1 <= 400) velX1 = -velX1;
+            if (posY1 + cometaHeight1 >= containerRect.height - 450 || posY1 <= 0) velY1 = -velY1;
+            cometa1.style.transform = `translate(${posX1}px, ${posY1}px) rotate(${angle1}deg)`;
+
+            velX2 = ajustarVelocidad(velX2, 0.015);
+            velY2 = ajustarVelocidad(velY2, 0.01);
+            angle2 = !vientoActivo ? ajustarRotacion(angle2, 0.08) : angle2 + (0 - angle2) * 0.05 * vientoIntensidad;
+            posX2 += velX2;
+            posY2 += velY2;
+            if (posX2 + cometaWidth2 >= containerRect.width - 400 || posX2 <= 400) velX2 = -velX2;
+            if (posY2 + cometaHeight2 >= containerRect.height - 450 || posY2 <= 0) velY2 = -velY2;
+            cometa2.style.transform = `translate(${posX2}px, ${posY2}px) rotate(${angle2}deg)`;
+
+            velX3 = ajustarVelocidad(velX3, 0.02);
+            velY3 = ajustarVelocidad(velY3, 0.015);
+            angle3 = !vientoActivo ? ajustarRotacion(angle3, 0.12) : angle3 + (0 - angle3) * 0.05 * vientoIntensidad;
+            posX3 += velX3;
+            posY3 += velY3;
+            if (posX3 + cometaWidth3 >= containerRect.width - 400 || posX3 <= 400) velX3 = -velX3;
+            if (posY3 + cometaHeight3 >= containerRect.height - 450 || posY3 <= 0) velY3 = -velY3;
+            cometa3.style.transform = `translate(${posX3}px, ${posY3}px) rotate(${angle3}deg)`;
+
+            requestAnimationFrame(moverCometas);
+        }
+
+        moverCometas();
+
+        setInterval(() => {
+            activarViento();
+        }, Math.random() * 15000 + 10000);
+    </script>
+</body>
+</html>
