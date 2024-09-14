@@ -4,4 +4,4 @@ This repository contains the files for the "Chilean Kites" banner.
 
 ## Banner Preview
 
-[Click here to view the animated banner](https://www.xokita.de/baner_volantines/volantines.html)
+[Click here to view the animated banner](https://www.xokita.de/)
